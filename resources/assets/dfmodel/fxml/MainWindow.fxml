@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.cepera.dfmodel.display.MainController">
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="%menu.file">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#onNewFileClick" text="%menu.file.new" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+              <MenuItem mnemonicParsing="false" onAction="#onFileOpenClick" text="%menu.file.open" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" onAction="#onFileSaveClick" text="%menu.file.save" />
+                  <MenuItem mnemonicParsing="false" onAction="#onFileSaveAsClick" text="%menu.file.save_as" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" onAction="#onExitClick" text="%menu.file.exit" />
+               </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="%menu.edit">
+            <items>
+              <MenuItem fx:id="editMenuParameters" mnemonicParsing="false" onAction="#onClickEditMenuParameters" text="%elements.parameters" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem fx:id="editMenuRotate" mnemonicParsing="false" onAction="#onClickEditMenuRotate" text="%menu.edit.rotate" />
+                  <MenuItem fx:id="editMenuRotateLeft" mnemonicParsing="false" onAction="#onClickEditMenuRotateLeft" text="%menu.edit.rotate_left" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem fx:id="editMenuDuplicate" mnemonicParsing="false" onAction="#onClickEditMenuDuplicate" text="%menu.edit.duplicate" />
+                  <MenuItem fx:id="editMenuRemove" mnemonicParsing="false" onAction="#onClickEditMenuRemove" text="%menu.edit.remove" />
+            </items>
+          </Menu>
+            <Menu mnemonicParsing="false" text="%menu.simulation">
+              <items>
+                  <MenuItem mnemonicParsing="false" onAction="#onClickSimulationMenuSimulation" text="%menu.simulation.simulation" />
+                <MenuItem mnemonicParsing="false" onAction="#onClickSimulationMenuOneStep" text="%menu.simulation.one_step" />
+                  <MenuItem mnemonicParsing="false" onAction="#onClickSimulationMenuEnd" text="%menu.simulation.end" />
+              </items>
+            </Menu>
+          <Menu mnemonicParsing="false" text="%menu.help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="%menu.help.about" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+   <center>
+      <ScrollPane fx:id="schemeCanvasContainer" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <content>
+            <Canvas fx:id="schemeCanvas" height="480.0" width="640.0" />
+         </content>
+      </ScrollPane>
+   </center>
+   <left>
+      <BorderPane maxWidth="1.7976931348623157E308" prefWidth="226.0" BorderPane.alignment="CENTER">
+         <top>
+            <Label alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: #ddd;" text="%elements" textAlignment="CENTER" BorderPane.alignment="CENTER">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <BorderPane.margin>
+                  <Insets />
+               </BorderPane.margin>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+            </Label>
+         </top>
+         <center>
+            <Accordion fx:id="elements" BorderPane.alignment="CENTER" />
+         </center>
+      </BorderPane>
+   </left>
+</BorderPane>

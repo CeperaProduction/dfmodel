@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane maxWidth="188.0" minHeight="-Infinity" minWidth="-Infinity" prefWidth="188.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.cepera.dfmodel.display.ElementListCellController">
+   <left>
+      <ImageView fx:id="image" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </BorderPane.margin>
+      </ImageView>
+   </left>
+   <center>
+      <Label fx:id="label" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="47.0" prefWidth="136.0" text="ELEMENT_NAME" wrapText="true" BorderPane.alignment="CENTER_LEFT">
+         <BorderPane.margin>
+            <Insets left="5.0" />
+         </BorderPane.margin>
+      </Label>
+   </center>
+   <bottom>
+      <Separator prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </bottom>
+</BorderPane>

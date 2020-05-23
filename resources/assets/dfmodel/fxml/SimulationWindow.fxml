@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="290.0" prefWidth="440.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.cepera.dfmodel.display.SimulationController">
+   <center>
+      <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
+         <children>
+            <GridPane maxHeight="-Infinity" prefHeight="60.0" prefWidth="400.0" vgap="10.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="355.0" minWidth="10.0" prefWidth="230.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="248.0" minWidth="10.0" prefWidth="230.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="23.0" minHeight="8.0" prefHeight="17.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="26.0" minHeight="0.0" prefHeight="17.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label text="%labels.simulation.ticks" wrapText="true" GridPane.hgrow="ALWAYS" />
+                  <TextField fx:id="ticksField" text="1" GridPane.columnIndex="1" />
+                  <Label text="%labels.simulation.tick_delay" wrapText="true" GridPane.rowIndex="1" />
+                  <TextField fx:id="delaysField" text="0.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </GridPane>
+            <Separator prefHeight="0.0" prefWidth="400.0" />
+            <BorderPane>
+               <left>
+                  <Label text="%labels.simulation.current_task" BorderPane.alignment="CENTER" />
+               </left>
+               <right>
+                  <Label fx:id="currentTaskLabel" text="(0/0)" BorderPane.alignment="CENTER" />
+               </right>
+            </BorderPane>
+            <ProgressBar fx:id="currentTaskBar" maxWidth="1.7976931348623157E308" prefHeight="23.0" progress="0.0">
+               <VBox.margin>
+                  <Insets left="10.0" right="10.0" />
+               </VBox.margin>
+            </ProgressBar>
+            <Separator prefWidth="200.0" />
+            <BorderPane>
+               <left>
+                  <Label text="%labels.simulation.all_tasks" BorderPane.alignment="CENTER" />
+               </left>
+               <right>
+                  <Label fx:id="allTasksLabel" text="(0/0)" BorderPane.alignment="CENTER" />
+               </right>
+            </BorderPane>
+            <ProgressBar fx:id="allTasksBar" maxWidth="1.7976931348623157E308" progress="0.0">
+               <padding>
+                  <Insets left="10.0" right="10.0" />
+               </padding>
+            </ProgressBar>
+            <Separator prefWidth="200.0" />
+         </children>
+      </VBox>
+   </center>
+   <bottom>
+      <HBox spacing="10.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="startButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onStartClick" text="%buttons.simulation.start" />
+            <Button fx:id="stopButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onStopClick" text="%buttons.simulation.stop" />
+            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onEndClick" text="%buttons.simulation.end" />
+         </children>
+         <padding>
+            <Insets top="10.0" />
+         </padding>
+      </HBox>
+   </bottom>
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
+</BorderPane>
