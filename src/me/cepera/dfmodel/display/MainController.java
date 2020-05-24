@@ -215,6 +215,7 @@ public class MainController {
 				updateEditMenuState();
 			} catch (IOException e) {
 				DFModel.logException("File load failed.", e);
+				MainWindow.showError(e);
 			}
 		}
 	}
@@ -226,6 +227,7 @@ public class MainController {
 			scheme.setChanged(false);
 		} catch (IOException e) {
 			DFModel.logException("File save failed.", e);
+			MainWindow.showError(e);
 		}
 	}
 	
