@@ -34,6 +34,7 @@ public class LogicalFunctionElement extends ElementBase<LogicalFunctionElement>{
 	
 	public LogicalFunctionElement(IElementFactory<LogicalFunctionElement> factory) {
 		super(factory);
+		registerPriorityParam();
 		IElementParameter nameParam = new StringElementParameter() {
 			
 			@Override
@@ -76,11 +77,9 @@ public class LogicalFunctionElement extends ElementBase<LogicalFunctionElement>{
 			key = key << 1;
 			if(input[i]) key = key | 1;
 		}
-		System.out.println("\n"+Integer.toBinaryString(key));
 		boolean[] result = new boolean[outputs];
 		int val = table[key];
 		int firstBitMask = 1 << (outputs-1);
-		System.out.println(Integer.toBinaryString(val));
 		for(int i = 0; i < result.length; i++) {
 			result[i] = (val & firstBitMask) != 0;
 			val = val << 1;
@@ -100,6 +99,7 @@ public class LogicalFunctionElement extends ElementBase<LogicalFunctionElement>{
 
 	@Override
 	public void readData(ByteDataInputStream data) throws IOException {
+		super.readData(data);
 		functionName = data.readUTF();
 		inputs = data.readInt();
 		outputs = data.readInt();
@@ -110,6 +110,7 @@ public class LogicalFunctionElement extends ElementBase<LogicalFunctionElement>{
 
 	@Override
 	public void writeData(ByteDataOutputStream data) throws IOException {
+		super.writeData(data);
 		data.writeUTF(functionName);
 		data.writeInt(inputs);
 		data.writeInt(outputs);

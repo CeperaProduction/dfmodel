@@ -19,6 +19,7 @@ public class LogicalXOrElement extends ElementBase<LogicalXOrElement>{
 	
 	public LogicalXOrElement(IElementFactory<LogicalXOrElement> factory) {
 		super(factory);
+		registerPriorityParam();
 		IElementParameter delayParameter = new BooleanElementParameter() {
 			@Override
 			public String getIdentificator() {
@@ -81,6 +82,7 @@ public class LogicalXOrElement extends ElementBase<LogicalXOrElement>{
 
 	@Override
 	public void readData(ByteDataInputStream data) throws IOException {
+		super.readData(data);
 		try {
 			delay = data.readBoolean();
 		}catch (Exception e) {
@@ -90,6 +92,7 @@ public class LogicalXOrElement extends ElementBase<LogicalXOrElement>{
 
 	@Override
 	public void writeData(ByteDataOutputStream data) throws IOException {
+		super.writeData(data);
 		data.writeBoolean(delay);
 	}
 

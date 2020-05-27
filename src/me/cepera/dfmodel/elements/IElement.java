@@ -28,4 +28,6 @@ public interface IElement extends IByteDataSerializable{
 	
 	public void onSimulationStart();
 	
+	public int getPriority();
+	
 }

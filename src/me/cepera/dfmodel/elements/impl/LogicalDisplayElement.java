@@ -22,6 +22,7 @@ public class LogicalDisplayElement extends ElementBase<LogicalDisplayElement>{
 	
 	public LogicalDisplayElement(IElementFactory<LogicalDisplayElement> factory) {
 		super(factory);
+		registerPriorityParam();
 		parameters.add(new BooleanElementParameter() {
 			@Override
 			public String getIdentificator() {
@@ -151,6 +152,7 @@ public class LogicalDisplayElement extends ElementBase<LogicalDisplayElement>{
 
 	@Override
 	public void readData(ByteDataInputStream data) throws IOException {
+		super.readData(data);
 		try {
 			out = data.readBoolean();
 			delay = data.readBoolean();
@@ -162,6 +164,7 @@ public class LogicalDisplayElement extends ElementBase<LogicalDisplayElement>{
 
 	@Override
 	public void writeData(ByteDataOutputStream data) throws IOException {
+		super.writeData(data);
 		data.writeBoolean(out);
 		data.writeBoolean(delay);
 		data.writeBoolean(value);

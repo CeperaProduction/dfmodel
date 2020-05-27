@@ -62,11 +62,13 @@ public class LogicalConstantElement extends ElementBase<LogicalConstantElement>{
 
 	@Override
 	public void readData(ByteDataInputStream data) throws IOException {
+		super.readData(data);
 		value = data.readBoolean();
 	}
 
 	@Override
 	public void writeData(ByteDataOutputStream data) throws IOException {
+		super.writeData(data);
 		data.writeBoolean(value);
 	}
 

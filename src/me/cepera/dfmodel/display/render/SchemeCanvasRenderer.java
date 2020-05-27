@@ -35,20 +35,6 @@ public class SchemeCanvasRenderer {
 		gc.setFill(Color.WHITE);
 		gc.fillRect(0, 0, width, height);
 		gc.setFill(Color.BLACK);
-		/*gc.save();
-		translate(gc, 50, 50);
-		rotate(gc, counter+=1, 25, 25);
-		gc.strokeRect(0, 0, 50, 50);
-		gc.save();
-		translate(gc, 40, 40);
-		gc.strokeRect(0, 0, 10, 10);
-		gc.restore();
-		rotate(gc, -(counter+1)*2, 25, 25);
-		translate(gc, 15, 15);
-		gc.strokeRect(0, 0, 20, 20);
-		gc.restore();
-		gc.fillText("TEST: "+((int)counter/60)+" | "+(int)counter+" | "+canvasMouseX+" "+canvasMouseY, 100, 150);
-		*/
 		Scheme scheme = DFModel.getCurrentScheme();
 		Simulation simulation = DFModel.getCurrentSimulation().orElse(null);
 		for(ElementContainer el : scheme.getElements()) {

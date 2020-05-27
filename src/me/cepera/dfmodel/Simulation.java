@@ -2,6 +2,7 @@ package me.cepera.dfmodel;
 
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -146,7 +147,12 @@ public class Simulation {
 	@Deprecated
 	public synchronized void tick() {
 		List<ElementSimulation> elements = new ArrayList<>(this.elementSimulations);
-		for(ElementSimulation s : elements) s.prepare();
+		Collections.sort(elements, (e1, e2)->{
+			return e2.element.getPriority() - e1.element.getPriority();
+		});
+		for(ElementSimulation s : elements) {
+			s.prepareTick();
+		}
 		Iterator<ElementSimulation> it = elements.iterator();
 		l: while(it.hasNext()) {
 			ElementSimulation s = it.next();
@@ -158,64 +164,73 @@ public class Simulation {
 		}
 		int tscc = 1;
 		while(tscc != 0) {
-			tscc = 0;
-			it = elements.iterator();
-			m0: while(it.hasNext()) {
-				ElementSimulation s = it.next();
-				boolean[] inputs = new boolean[s.element.getInputCount()];
-				for(int i = 0; i < inputs.length; i++) {
-					List<Scheme.Wire> wires = scheme.getInputWires(s.uuid, i);
-					if(wires.size() == 0) {
-						inputs[i] = false;
-					}else {
-						boolean found = false;
-						for(Scheme.Wire wire : wires) {
-							ElementSimulation source = elementSimulationsByUUID.get(wire.getSourceUUID());
-							if(source.prepared != null) {
-								inputs[i] = inputs[i] | source.prepared[wire.getSourceOutputNumber()];
-								found = true;
-							}else if(source.calculatedThisTick) {
-								inputs[i] = inputs[i] | source.lastTickOutputs[wire.getSourceOutputNumber()];
-								found = true;
-							}
+			tscc = calculateCompletedElements(elements.iterator());
+			if(tscc == 0) {
+				for(ElementSimulation s : this.elementSimulations) s.prepareStep();
+				tscc = calculateNonCompletedElements(elements.iterator());
+			}
+		}
+		ticks++;
+	}
+	
+	private int calculateCompletedElements(Iterator<ElementSimulation> it) {
+		int tscc = 0;
+		m0: while(it.hasNext()) {
+			ElementSimulation s = it.next();
+			boolean[] inputs = new boolean[s.element.getInputCount()];
+			for(int i = 0; i < inputs.length; i++) {
+				List<Scheme.Wire> wires = scheme.getInputWires(s.uuid, i);
+				if(wires.size() == 0) {
+					inputs[i] = false;
+				}else {
+					boolean found = false;
+					for(Scheme.Wire wire : wires) {
+						ElementSimulation source = elementSimulationsByUUID.get(wire.getSourceUUID());
+						if(source.prepared != null) {
+							inputs[i] = inputs[i] | source.prepared[wire.getSourceOutputNumber()];
+							found = true;
+						}else if(source.calculatedThisTick) {
+							inputs[i] = inputs[i] | source.lastTickOutputs[wire.getSourceOutputNumber()];
+							found = true;
 						}
-						if(!found) continue m0;
+					}
+					if(!found) continue m0;
+				}
+			}
+			s.tick(inputs);
+			it.remove();
+			tscc++;
+		}
+		return tscc;
+	}
+	
+	private int calculateNonCompletedElements(Iterator<ElementSimulation> it) {
+		int tscc = 0;
+		m0: while(it.hasNext()) {
+			ElementSimulation s = it.next();
+			boolean[] inputs = new boolean[s.element.getInputCount()];
+			boolean hasCalculated = false;
+			for(int i = 0; i < inputs.length; i++) {
+				List<Scheme.Wire> wires = scheme.getInputWires(s.uuid, i);
+				boolean nf = true;
+				for(Scheme.Wire wire : wires) {
+					ElementSimulation source = elementSimulationsByUUID.get(wire.getSourceUUID());
+					if(source.calculatedThisStep) continue m0;
+					if(source.calculatedThisTick) {
+						inputs[i] = inputs[i] | source.lastTickOutputs[wire.getSourceOutputNumber()];
+						hasCalculated = true;
+						nf = false;
 					}
 				}
+				if(nf) inputs[i] = false;
+			}
+			if(hasCalculated) {
 				s.tick(inputs);
 				it.remove();
 				tscc++;
 			}
 		}
-		tscc = 1;
-		while(tscc != 0) {
-			tscc = 0;
-			it = elements.iterator();
-			while(it.hasNext()) {
-				ElementSimulation s = it.next();
-				boolean[] inputs = new boolean[s.element.getInputCount()];
-				boolean hasCalculated = false;
-				for(int i = 0; i < inputs.length; i++) {
-					List<Scheme.Wire> wires = scheme.getInputWires(s.uuid, i);
-					boolean nf = true;
-					for(Scheme.Wire wire : wires) {
-						ElementSimulation source = elementSimulationsByUUID.get(wire.getSourceUUID());
-						if(source.calculatedThisTick) {
-							inputs[i] = inputs[i] | source.lastTickOutputs[wire.getSourceOutputNumber()];
-							hasCalculated = true;
-							nf = false;
-						}
-					}
-					if(nf) inputs[i] = false;
-				}
-				if(hasCalculated) {
-					s.tick(inputs);
-					it.remove();
-					tscc++;
-				}
-			}
-		}
-		ticks++;
+		return tscc;
 	}
 	
 	public class ElementSimulation{
@@ -229,6 +244,7 @@ public class Simulation {
 		private boolean[] nextPrepared;
 		
 		private boolean calculatedThisTick = false;
+		private boolean calculatedThisStep = false;
 		
 		private ElementSimulation(Scheme.ElementContainer container) {
 			uuid = container.getUUID();
@@ -236,25 +252,27 @@ public class Simulation {
 			element.copyState(container.getElement());
 			element.onSimulationStart();
 			nextPrepared = element.preprocessed(ticks).orElse(null);
-			prepare();
+			prepareTick();
 		}
 		
-		private void prepare() {
+		private void prepareTick() {
 			calculatedThisTick = false;
 			lastTickInputs = new boolean[element.getInputCount()];
 			lastTickOutputs = new boolean[element.getOutputCount()];
 			prepared = nextPrepared;
+			prepareStep();
+		}
+		
+		private void prepareStep() {
+			calculatedThisStep = false;
 		}
 		
 		private boolean[] tick(boolean[] inputs) {
 			lastTickOutputs = element.process(inputs, ticks);
 			lastTickInputs = inputs;
 			calculatedThisTick = true;
+			calculatedThisStep = true;
 			nextPrepared = element.preprocessed(ticks+1).orElse(null);
-			/*System.out.println(element.getFactory().getIdentificator()
-					+" "+(prepared != null)
-					+" "+(lastTickInputs.length > 0 ? lastTickInputs[0] : "")
-					+" "+lastTickOutputs[0]);*/
 			return lastTickOutputs;
 		}
 		

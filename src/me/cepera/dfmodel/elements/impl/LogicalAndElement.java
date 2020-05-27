@@ -19,6 +19,7 @@ public class LogicalAndElement extends ElementBase<LogicalAndElement>{
 	
 	public LogicalAndElement(IElementFactory<LogicalAndElement> factory) {
 		super(factory);
+		registerPriorityParam();
 		IElementParameter delayParameter = new BooleanElementParameter() {
 			@Override
 			public String getIdentificator() {
@@ -81,6 +82,7 @@ public class LogicalAndElement extends ElementBase<LogicalAndElement>{
 
 	@Override
 	public void readData(ByteDataInputStream data) throws IOException {
+		super.readData(data);
 		try {
 			delay = data.readBoolean();
 		}catch (Exception e) {
@@ -90,6 +92,7 @@ public class LogicalAndElement extends ElementBase<LogicalAndElement>{
 
 	@Override
 	public void writeData(ByteDataOutputStream data) throws IOException {
+		super.writeData(data);
 		data.writeBoolean(delay);
 	}
 
