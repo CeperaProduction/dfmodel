@@ -36,6 +36,9 @@ public class Simulation {
 			elementSimulations.add(s);
 			elementSimulationsByUUID.put(s.uuid, s);
 		}
+		Collections.sort(elementSimulations, (e1, e2)->{
+			return e2.element.getPriority() - e1.element.getPriority();
+		});
 	}
 	
 	/**
@@ -147,9 +150,6 @@ public class Simulation {
 	@Deprecated
 	public synchronized void tick() {
 		List<ElementSimulation> elements = new ArrayList<>(this.elementSimulations);
-		Collections.sort(elements, (e1, e2)->{
-			return e2.element.getPriority() - e1.element.getPriority();
-		});
 		for(ElementSimulation s : elements) {
 			s.prepareTick();
 		}
