@@ -3,9 +3,9 @@ package me.cepera.dfmodel.elements;
 import java.util.Optional;
 
 public enum DefaultElementCategory implements IElementCategory {
-	LOGICAL,
-	DIGITAL_DATA_STORAGES,
 	FUNCTIONS,
+	DIGITAL_DATA_STORAGES,
+	BLOCKS_AND_TRIGGERS,
 	SOURCES;
 	
 	private String id;

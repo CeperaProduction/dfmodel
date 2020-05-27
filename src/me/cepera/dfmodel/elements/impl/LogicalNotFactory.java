@@ -15,7 +15,7 @@ public class LogicalNotFactory extends ElementFactoryBase<LogicalNotElement>{
 	
 	@Override
 	public IElementCategory getCategory() {
-		return DefaultElementCategory.LOGICAL;
+		return DefaultElementCategory.FUNCTIONS;
 	}
 
 	@Override

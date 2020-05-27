@@ -15,7 +15,7 @@ public class LogicalXOrFactory extends ElementFactoryBase<LogicalXOrElement>{
 	
 	@Override
 	public IElementCategory getCategory() {
-		return DefaultElementCategory.LOGICAL;
+		return DefaultElementCategory.FUNCTIONS;
 	}
 
 	@Override

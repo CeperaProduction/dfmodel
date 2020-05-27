@@ -10,6 +10,7 @@ import me.cepera.dfmodel.elements.DefaultElementCategory;
 import me.cepera.dfmodel.elements.IElement;
 import me.cepera.dfmodel.elements.IElementCategory;
 import me.cepera.dfmodel.elements.IElementFactory;
+import me.cepera.dfmodel.elements.impl.DTriggerFactory;
 import me.cepera.dfmodel.elements.impl.LogicalAndFactory;
 import me.cepera.dfmodel.elements.impl.LogicalConstantFactory;
 import me.cepera.dfmodel.elements.impl.LogicalDisplayFactory;
@@ -17,6 +18,7 @@ import me.cepera.dfmodel.elements.impl.LogicalFunctionFactory;
 import me.cepera.dfmodel.elements.impl.LogicalNotFactory;
 import me.cepera.dfmodel.elements.impl.LogicalOrFactory;
 import me.cepera.dfmodel.elements.impl.LogicalXOrFactory;
+import me.cepera.dfmodel.elements.impl.ShiftRegisterElementFactory;
 
 public class ElementRegistry {
 
@@ -77,6 +79,8 @@ public class ElementRegistry {
 		register(new LogicalFunctionFactory());
 		register(new LogicalConstantFactory());
 		register(new LogicalDisplayFactory());
+		register(new DTriggerFactory());
+		register(new ShiftRegisterElementFactory());
 		
 		DFModel.LOGGER.info("Registered "+registryList.size()+" elements");
 	}

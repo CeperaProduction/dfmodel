@@ -15,7 +15,7 @@ public class LogicalAndFactory extends ElementFactoryBase<LogicalAndElement>{
 	
 	@Override
 	public IElementCategory getCategory() {
-		return DefaultElementCategory.LOGICAL;
+		return DefaultElementCategory.FUNCTIONS;
 	}
 
 	@Override

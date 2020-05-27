@@ -1,31 +1,31 @@
 package me.cepera.dfmodel.elements.impl;
 
+import me.cepera.dfmodel.display.render.elements.DTriggerElementRenderer;
 import me.cepera.dfmodel.display.render.elements.IElementRenderer;
-import me.cepera.dfmodel.display.render.elements.LogicalOrElementRenderer;
 import me.cepera.dfmodel.elements.DefaultElementCategory;
 import me.cepera.dfmodel.elements.ElementFactoryBase;
 import me.cepera.dfmodel.elements.IElementCategory;
 
-public class LogicalOrFactory extends ElementFactoryBase<LogicalOrElement>{
+public class DTriggerFactory extends ElementFactoryBase<DTriggerElement>{
 
 	@Override
 	public String getIdentificator() {
-		return "logical_or";
+		return "d_trigger";
 	}
 	
 	@Override
 	public IElementCategory getCategory() {
-		return DefaultElementCategory.FUNCTIONS;
+		return DefaultElementCategory.BLOCKS_AND_TRIGGERS;
 	}
 
 	@Override
-	public IElementRenderer<LogicalOrElement> createRenderer(LogicalOrElement element) {
-		return new LogicalOrElementRenderer(element);
+	public IElementRenderer<DTriggerElement> createRenderer(DTriggerElement element) {
+		return new DTriggerElementRenderer(element);
 	}
 
 	@Override
-	public LogicalOrElement makeElement() {
-		return new LogicalOrElement(this);
+	public DTriggerElement makeElement() {
+		return new DTriggerElement(this);
 	}
 
 }
