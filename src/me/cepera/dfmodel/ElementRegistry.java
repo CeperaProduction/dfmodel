@@ -19,6 +19,7 @@ import me.cepera.dfmodel.elements.impl.LogicalNotFactory;
 import me.cepera.dfmodel.elements.impl.LogicalOrFactory;
 import me.cepera.dfmodel.elements.impl.LogicalXOrFactory;
 import me.cepera.dfmodel.elements.impl.ShiftRegisterElementFactory;
+import me.cepera.dfmodel.elements.impl.TTriggerFactory;
 
 public class ElementRegistry {
 
@@ -80,6 +81,7 @@ public class ElementRegistry {
 		register(new LogicalConstantFactory());
 		register(new LogicalDisplayFactory());
 		register(new DTriggerFactory());
+		register(new TTriggerFactory());
 		register(new ShiftRegisterElementFactory());
 		
 		DFModel.LOGGER.info("Registered "+registryList.size()+" elements");
