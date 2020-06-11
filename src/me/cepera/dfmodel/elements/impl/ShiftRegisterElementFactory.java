@@ -15,7 +15,7 @@ public class ShiftRegisterElementFactory extends ElementFactoryBase<ShiftRegiste
 	
 	@Override
 	public IElementCategory getCategory() {
-		return DefaultElementCategory.BLOCKS_AND_TRIGGERS;
+		return DefaultElementCategory.DIGITAL_DATA_STORAGES;
 	}
 
 	@Override
